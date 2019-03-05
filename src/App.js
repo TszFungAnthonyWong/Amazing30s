@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Table } from 'reactstrap';
-import SearchList from './components/searhList/searchList';
+
 import * as actionType from './store/action';
 import { connect } from 'react-redux';
 
+
 import Footer from './components/footer/footer';
 import Header from './components/header/header';
-
 import SideMenu from './components/sideMenu/sideMenu'
-
+import SearchList from './components/searhList/searchList';
 import RecentPlayList from './components/recentlyPlay/recentlyPlay';
 
 
@@ -40,74 +39,70 @@ class App extends Component {
     }
   }
 
-  audioControl = () => {
-
+  audioControl = (song_url) => {
     if (this.audio === undefined) {
-      this.audio = new Audio(this.props.nowPlaying.src);
+      this.audio = new Audio(song_url);
       this.audio.play();
     } else {
       this.audio.pause();
-      this.audio = new Audio(this.props.nowPlaying.src);
+      this.audio = new Audio(song_url);
       this.audio.play();
     }
-    // const { playSong, stopSong } = this.props;
-    // if(this.audio === undefined){
-    //   playSong(song.track);
-    //   this.audio = new Audio(song.track.preview_url);
-    //   this.audio.play();
-    // } else {
-    //   stopSong();
-    //   this.audio.pause();
-    //   playSong(song.track);
-    //   this.audio = new Audio(song.track.preview_url);
-    //   this.audio.play();
-    // }
   }
 
+  audioStop = () => {
+    if (this.audio) {
+      this.audio.pause()
+    }
+  }
+
+  audioplay = () => {
+    if (this.audio) {
+      this.audio.play()
+    }
+  }
+
+  audioMute = () => {
+    if (this.audio) {
+      let isMute = this.audio.muted
+      this.audio.muted = !isMute;
+    }
+  }
+
+  NextSong = () => {
+
+  }
 
   render() {
-    
-    this.audioControl()
-
     let content = ''
-
     if (this.props.songList) {
-      content =
-        <Table hover>
-          <tr>
-             <th>TITLE</th>
-            <th>ARTIST</th>
-            <th>ALBUM</th>
-          </tr>
-          <tbody>
-            <SearchList albumList={this.props.songList} click={this.props.playTrack} />
-          </tbody>
-        </Table>
+      content = <SearchList audioControl={this.audioControl} />
     } else {
-      content = <RecentPlayList />
+      content = <RecentPlayList audioControl={this.audioControl} />
     }
-
-
-
     return (
-
       <div className='app'>
+
+      <div className='app-container'>
+
         <div className='left-side-section'>
           <SideMenu />
-          <img src={this.props.nowPlaying.image} className='playingImg' alt='playingImage'></img>
         </div>
 
         <div className='main-section'>
           <Header />
           <h1>Song</h1>
-          <h1>Song</h1>
-          
           {content}
 
         </div>
+        <Footer
+          audioplay={this.audioplay}
+          audioStop={this.audioStop}
+          audioMute={this.audioMute}
+          audioControl={this.audioControl}
+        />
 
-        <Footer />
-
+</div>
       </div>
     );
   }
@@ -125,12 +120,9 @@ const mapDispatchToProps = dispatch => {
   return {
     search: (event, access_token) => dispatch(actionType.SEARCH(event, access_token)),
     setParams: (params) => dispatch({ type: actionType.SET_PARAMS, params }),
-    playTrack: (index) => dispatch({ type: actionType.PLAYTRACK, index }),
     getUser: (access_token) => dispatch(actionType.getUser(access_token)),
     getUserRecentlyPlayed: (access_token) => dispatch(actionType.getUserRecentlyPlayed(access_token))
   }
-
-
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -39,8 +39,9 @@ body {
 }
 
 
-.playingImg{
-  height: 190px;
+.app-container {
+  display: flex;
+  position: relative;
 }
 
 #root{
