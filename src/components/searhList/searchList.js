@@ -30,8 +30,8 @@ class searchList extends Component {
     }
     return (
       <Aux>
-        <h1>Song</h1>
-      <Table hover>
+        <h3>Song</h3>
+      <Table hover style={{ tableLayout: "fixed", width:'1000px'}}>
         <tr>
           <th>TITLE</th>
           <th>ARTIST</th>

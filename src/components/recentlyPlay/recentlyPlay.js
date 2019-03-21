@@ -21,6 +21,7 @@ export class recentlyPlay extends Component {
             <td>{cur.track.name}</td>
             <td>{cur.track.artists[0].name}</td>
             <td>{cur.track.album.name}</td>
+            
           </tr>
         )
       })
@@ -28,8 +29,8 @@ export class recentlyPlay extends Component {
 
     return (
       <Aux>
-        <h1>Recently Played</h1>
-        <Table hover>
+        <h3>Recently Played</h3>
+        <Table hover style={{ tableLayout: "fixed", width:'1000px'}}>
           <tr>
             <th>TITLE</th>
             <th>ARTIST</th>

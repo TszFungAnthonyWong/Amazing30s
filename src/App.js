@@ -82,18 +82,17 @@ class App extends Component {
     }
     return (
       <div className='app'>
-
+      
       <div className='app-container'>
-
+      <Header />
         <div className='left-side-section'>
           <SideMenu />
         </div>
-
         <div className='main-section'>
-          <Header />
-          <h1>Song</h1>
-          {content}
-
+          <div className='main-section-scroll'>
+            {content}
+          </div>
+          
         </div>
         <Footer
           audioplay={this.audioplay}

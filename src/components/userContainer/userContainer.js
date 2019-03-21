@@ -4,10 +4,19 @@ import {connect} from 'react-redux'
 
 export class userContainer extends Component {
 
+  
   render() {
+    let img;
+    if(this.props.user){
+      if(this.props.user.images.length>0){
+        img = <img className='userImage' src={this.props.user.images[0].url} alt='user-icon'/>;
+      }
+    }
+
+    console.log(this.props.user)
     return (
       <div className='userContainer'>
-        <img className='userImage' src={this.props.user?this.props.user.images[0].url:null} alt='user-icon'></img>
+        {img}
         <p className='userName'>{this.props.user?this.props.user.display_name:null}</p>
       </div>
     )

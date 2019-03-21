@@ -6,6 +6,7 @@ export const SET_PARAMS = () => {
         type: SET_PARAMS
     }
 }
+//-------------------------------------------------------------------------
 
 export const PLAYTRACK = () => {
     return {
@@ -18,10 +19,12 @@ export const PLAYT_RECENT_RACK = () => {
         type: PLAYT_RECENT_RACK
     };
 };
+//-------------------------------------------------------------------------
 
 export const SEARCH = (event, access_token) => {
     return dispatch => {
         spotifyApi.setAccessToken(access_token);
+        console.log(spotifyApi)
         spotifyApi.searchTracks(event.target.value)
             .then((response) => {
                 dispatch(searchSuccess(response.tracks.items));
@@ -37,6 +40,8 @@ export const searchSuccess = (songs) => {
         songs
     };
 };
+
+//-------------------------------------------------------------------------
 
 export const getUserRecentlyPlayed = (access_token) => {
     return dispatch => {
@@ -55,6 +60,8 @@ export const getUserRecentlyPlayedSuccess = (recentlyPlayList) => {
     }
 }
 
+//-------------------------------------------------------------------------
+
 export const getUser = (access_token) => {
     return dispatch => {
         spotifyApi.setAccessToken(access_token);
@@ -72,8 +79,28 @@ export const getUserSuccess = (user) => {
     };
 };
 
+//-------------------------------------------------------------------------
 export const CHANGE_PLAYING_STATE = () => {
     return {
         type: CHANGE_PLAYING_STATE
     }
+};
+//-------------------------------------------------------------------------
+
+
+export const SEARCH_ALBUM = (event, access_token) => {
+    return dispatch => {
+        spotifyApi.setAccessToken(access_token);
+        spotifyApi.searchAlbums(event.target.value)
+            .then((response) => {
+                console.log(response.albums.items[0])
+                spotifyApi.getAlbumTracks(response.albums.items[0].id).then((rp)=>{
+                    console.log(rp)
+                })
+            })
+            spotifyApi.searchArtists(event.target.value)
+            .then((response) => {
+                
+            })
+    };
 };
